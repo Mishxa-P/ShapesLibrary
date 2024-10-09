@@ -87,7 +87,7 @@
         {
             return sideA + sideB > sideC && sideA + sideC > sideB && sideB + sideC > sideA;
         }
-        protected override double CalculateArea()
+        public override double CalculateArea()
         {
             double semiPerimeter = (SideA + SideB + SideC) / 2;
             return Math.Sqrt(semiPerimeter * (semiPerimeter - SideA) * (semiPerimeter - SideB) * (semiPerimeter - SideC));

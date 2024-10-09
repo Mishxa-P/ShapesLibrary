@@ -10,6 +10,6 @@
             }
             return shape.CalculateArea();
         }
-        protected abstract double CalculateArea();
+        public abstract double CalculateArea();
     }
 }

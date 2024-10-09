@@ -24,9 +24,9 @@
                 throw new ArgumentException("Radius of circle must be greater than zero");
             }
             _radius = radius;
-        } 
+        }
 
-        protected override double CalculateArea()
+        public override double CalculateArea()
         {
             return Radius * Radius * Math.PI;
         }

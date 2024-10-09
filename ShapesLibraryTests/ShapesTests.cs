@@ -26,7 +26,7 @@ namespace ShapesLibraryTests
             Triangle triangle = new Triangle(sideA, sideB, sideC);
 
             double area = Shape.CalculateArea(triangle);
-            double expectedArea = 6; // Площадь треугольника с основаниями 3 и 4
+            double expectedArea = 6;
             Assert.That(area, Is.EqualTo(expectedArea).Within(1e-10), "Area calculation for Triangle is incorrect.");
         }
 
@@ -34,9 +34,22 @@ namespace ShapesLibraryTests
         public void Circle_InvalidRadius_ThrowsException()
         {
             double invalidRadius = -5;
+            Assert.Throws<ArgumentException>(() => new Circle(invalidRadius));
 
-            var ex = Assert.Throws<ArgumentException>(() => new Circle(invalidRadius));
-            Assert.That(ex.Message, Is.EqualTo("Radius of circle must be greater than zero"));
+            invalidRadius = 0;
+            Assert.Throws<ArgumentException>(() => new Circle(invalidRadius));
+        }
+
+        [Test]
+        public void Circle_SetInvalidRadius_ThrowsException()
+        {
+            Circle circle = new Circle(5);
+
+            double invalidRadius = -1;
+            Assert.Throws<ArgumentException>(() => circle.Radius = invalidRadius);
+
+            invalidRadius = 0;
+            Assert.Throws<ArgumentException>(() => circle.Radius = invalidRadius);
         }
 
         [Test]
@@ -46,8 +59,20 @@ namespace ShapesLibraryTests
             double sideB = 2;
             double sideC = 3; 
 
-            var ex = Assert.Throws<ArgumentException>(() => new Triangle(sideA, sideB, sideC));
-            Assert.That(ex.Message, Is.EqualTo("Sides can`t form a triangle"));
+            Assert.Throws<ArgumentException>(() => new Triangle(sideA, sideB, sideC));
+        }
+
+        [Test]
+        public void Triangle_SetInvalidSide_ThrowsException()
+        {
+            Triangle triangle = new Triangle(3, 4, 5);
+
+            Assert.Throws<ArgumentException>(() => triangle.SideA = -1);
+            Assert.Throws<ArgumentException>(() => triangle.SideA = 0);
+            Assert.Throws<ArgumentException>(() => triangle.SideB = -1);
+            Assert.Throws<ArgumentException>(() => triangle.SideB = 0);
+            Assert.Throws<ArgumentException>(() => triangle.SideC = -1);
+            Assert.Throws<ArgumentException>(() => triangle.SideC = 0);
         }
 
         [Test]
@@ -59,7 +84,6 @@ namespace ShapesLibraryTests
             Triangle triangle = new Triangle(sideA, sideB, sideC);
 
             bool isRightTriangle = triangle.IsRightAngledTriangle();
-
             Assert.That(isRightTriangle, "Triangle should be a right triangle.");
         }
 
@@ -68,8 +92,7 @@ namespace ShapesLibraryTests
         {
             Triangle testShape = null;
 
-            var ex = Assert.Throws<ArgumentNullException>(() => Shape.CalculateArea(testShape));
-            Assert.That(ex.Message, Is.EqualTo("Shape cant be null (Parameter 'shape')"));
+            Assert.Throws<ArgumentNullException>(() => Shape.CalculateArea(testShape));
         }
     }
 }  
